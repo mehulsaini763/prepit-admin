@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   flexRender,
   getCoreRowModel,
@@ -8,18 +8,11 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table';
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-import ViewDialog from "./view-dialog";
+import ViewDialog from './view-dialog';
 
 export const columns = [
   // {
@@ -45,9 +38,9 @@ export const columns = [
   //   enableHiding: false,
   // },
   {
-    id: "question",
-    accessorKey: "question",
-    header: "Question",
+    id: 'question',
+    accessorKey: 'question',
+    header: 'Question',
     // header: ({ column }) => (
     //   <Button
     //     variant="ghost"
@@ -58,21 +51,21 @@ export const columns = [
     //   </Button>
     // ),
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("question")}</div>
+      <div className="question-cell flex flex-col gap-2 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: row.getValue('question')}} />
     ),
   },
   {
-    id: "category",
-    accessorKey: "category",
-    header: "Category",
+    id: 'category',
+    accessorKey: 'category',
+    header: 'Category',
     // cell: ({ row }) => (
     //   <div className="lowercase px-4">{row.getValue("email")}</div>
     // ),
   },
   {
-    id: "topic",
-    accessorKey: "topic",
-    header: "Topic",
+    id: 'topic',
+    accessorKey: 'topic',
+    header: 'Topic',
     // header: ({ column }) => (
     //   <Button
     //     variant="ghost"
@@ -89,21 +82,17 @@ export const columns = [
     // ),
   },
   {
-    id: "isCaselet",
-    accessorKey: "isCaselet",
+    id: 'isCaselet',
+    accessorKey: 'isCaselet',
     header: () => <div className="text-right">Caselet</div>,
-    cell: ({ row }) => (
-      <div className="text-right font-medium">
-        {row.getValue("isCaselet") ? "true" : "false"}
-      </div>
-    ),
+    cell: ({ row }) => <div className="text-right font-medium">{row.getValue('isCaselet') ? 'true' : 'false'}</div>,
   },
   {
-    id: "actions",
+    id: 'actions',
     enableHiding: false,
     cell: ({ row }) => (
       <div className="text-right">
-        <ViewDialog question={row.original}/>
+        <ViewDialog question={row.original} />
       </div>
     ),
   },
@@ -135,8 +124,7 @@ const QuestionsTable = ({ data, searchValue }) => {
   });
 
   useEffect(() => {
-    searchValue != "" ?
-      table.getColumn("question")?.setFilterValue(searchValue):table.resetColumnFilters()
+    searchValue != '' ? table.getColumn('question')?.setFilterValue(searchValue) : table.resetColumnFilters();
   }, [searchValue]);
 
   return (
@@ -148,12 +136,7 @@ const QuestionsTable = ({ data, searchValue }) => {
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </TableHead>
                 );
               })}
@@ -163,14 +146,9 @@ const QuestionsTable = ({ data, searchValue }) => {
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
+              <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
+                  <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                 ))}
               </TableRow>
             ))

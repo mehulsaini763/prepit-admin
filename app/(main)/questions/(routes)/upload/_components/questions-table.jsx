@@ -32,7 +32,7 @@ const QuestionsTable = ({ data }) => {
                   <TableRow key={i}>
                     <TableCell className="flex items-center gap-4">
                       <div
-                        className="question-cell flex flex-col gap-2 text-pretty"
+                        className="question-cell flex flex-col gap-2 whitespace-pre-wrap"
                         dangerouslySetInnerHTML={{ __html: v[0] }}
                       />
                     </TableCell>
