@@ -1,30 +1,23 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormControl,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { toast } from "@/components/ui/use-toast";
-import { Loader2 } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Form, FormField, FormItem, FormControl, FormLabel, FormMessage } from '@/components/ui/form';
+import { toast } from '@/components/ui/use-toast';
+import { Loader2 } from 'lucide-react';
 
-import Image from "next/image";
-import PlaceholderImage from "@/assets/placeholder.svg";
+import Image from 'next/image';
+import PlaceholderImage from '@/app/favicon.ico';
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 
-import { auth } from "@/configs/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '@/configs/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   email: z.string().toLowerCase().email(),
@@ -39,8 +32,8 @@ const LoginPage = () => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
@@ -49,17 +42,17 @@ const LoginPage = () => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       toast({
-        description: "LoggedIn Successfully.",
+        description: 'LoggedIn Successfully.',
       });
-      router.push("/dashboard");
+      router.push('/dashboard');
       setLoading(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
       toast({
-        variant: "destructive",
-        title: "Invalid Credentials!",
-        description: "Please check your email and password.",
+        variant: 'destructive',
+        title: 'Invalid Credentials!',
+        description: 'Please check your email and password.',
       });
     }
   };
@@ -69,9 +62,7 @@ const LoginPage = () => {
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
             <h1 className="text-3xl font-bold">Login</h1>
-            <p className="text-balance text-muted-foreground">
-              Enter your email below to login to your account
-            </p>
+            <p className="text-balance text-muted-foreground">Enter your email below to login to your account</p>
           </div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -109,22 +100,21 @@ const LoginPage = () => {
                       Please Wait
                     </>
                   ) : (
-                    "Login"
+                    'Login'
                   )}
                 </Button>
               </div>
             </form>
           </Form>
+          <div className="text-sm italic text-red-500">
+            <p className="font-bold">[NOTE] : Test User can use the following credentials</p>
+            <p>[email]: test@admin.com</p>
+            <p>[password]: pass1234</p>
+          </div>
         </div>
       </div>
-      <div className="overflow-hidden hidden bg-muted lg:block">
-        <Image
-          src={PlaceholderImage.src}
-          alt="Image"
-          width="500"
-          height="500"
-          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
+      <div className="relative hidden lg:block bg-[#18A8D8] px-24">
+        <Image src={PlaceholderImage.src} alt="Image" width="500" height="500" className="h-full w-full object-contain" />
       </div>
     </main>
   );
