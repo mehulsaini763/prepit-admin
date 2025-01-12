@@ -19,10 +19,10 @@ import TestForm from "./components/test-form";
 const QuestionsPage = () => {
   const { toast } = useToast();
 
-  const [sampleTests, setSampleTests] = useState(null);
+  const [formats, setSampleTests] = useState(null);
 
   const getSampleTests = async () => {
-    const collectionRef = collection(db, "sampleTests");
+    const collectionRef = collection(db, "formats");
     const docSnapshot = await getDocs(collectionRef);
     const tests = [];
     docSnapshot.forEach((doc) => tests.push(doc.data()));
@@ -30,7 +30,7 @@ const QuestionsPage = () => {
   };
 
   const updateSampleTests = async (type, data) => {
-    const docRef = doc(db, "sampleTests", type);
+    const docRef = doc(db, "formats", type);
     await setDoc(docRef, data);
     toast({
       description: "Test Details Updated!",
@@ -71,12 +71,12 @@ const QuestionsPage = () => {
             </TabsTrigger>
           </TabsList>
         </div>
-        {!sampleTests ? (
+        {!formats ? (
           <div className="h-full w-2/3 rounded-md flex flex-col justify-center items-center border p-4">
             <Loader2 className="h-8 w-8 animate-spin" />
           </div>
         ) : (
-          sampleTests.map((test, i) => (
+          formats.map((test, i) => (
             <TabsContent className="mt-0 w-full md:w-2/3" value={test.testType}>
               <TestForm data={test} updateTestDetails={updateSampleTests} />
             </TabsContent>

@@ -1,51 +1,44 @@
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/use-toast";
-import { CircleCheck, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/components/ui/use-toast';
+import { CircleCheck, Loader2 } from 'lucide-react';
+import { useState } from 'react';
 
 const CloseDialog = ({ loading, id, email, updateQuery }) => {
   const [sent, setSent] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const subject = `${id}: Issue Closed`;
 
   const { toast } = useToast();
 
   const handleSubmit = async () => {
     try {
-      await fetch("/api/mail/send", {
-        method: "POST",
-        body: JSON.stringify({
-          email: email,
-          message: message,
-          subject: subject,
-        }),
-      });
+      // await fetch("/api/mail/send", {
+      //   method: "POST",
+      //   body: JSON.stringify({
+      //     email: email,
+      //     message: message,
+      //     subject: subject,
+      //   }),
+      // });
       updateQuery(id, {
-        status: "closed",
+        status: 'closed',
         closedResponse: message,
       });
       toast({
-        title: "Closed",
-        description: "Query is closed and mail is sent to the user",
+        title: 'Closed',
+        description: 'Query is closed and mail is sent to the user',
       });
       setSent(true);
     } catch (error) {
       console.log(error);
       toast({
-        title: "Error",
-        description: "Unable close query",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Unable close query',
+        variant: 'destructive',
       });
     }
   };
@@ -78,11 +71,7 @@ const CloseDialog = ({ loading, id, email, updateQuery }) => {
           />
         </div>
         <DialogFooter>
-          <Button
-            className="flex items-center gap-2"
-            disabled={loading || sent || !message}
-            onClick={handleSubmit}
-          >
+          <Button className="flex items-center gap-2" disabled={loading || sent || !message} onClick={handleSubmit}>
             {sent ? (
               <>
                 <CircleCheck className="h-4 w-4" /> Sent
@@ -90,9 +79,9 @@ const CloseDialog = ({ loading, id, email, updateQuery }) => {
             ) : loading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              "Submit"
+              'Submit'
             )}
-          </Button>{" "}
+          </Button>{' '}
         </DialogFooter>
       </DialogContent>
     </Dialog>

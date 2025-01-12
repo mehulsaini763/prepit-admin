@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
-import PlaceholderImage from "@/assets/placeholder.svg";
+import PlaceholderImage from "@/public/placeholder.svg";
 
 const MediaDetails = ({ selectedImage }) => {
   return (
