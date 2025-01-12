@@ -1,4 +1,3 @@
-a
 ![Logo](/public/screenshots/prepit_landscape.png)
 
 # **PrepIt Admin**
